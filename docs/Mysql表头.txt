@@ -1,0 +1,58 @@
+﻿create database web_dazuoye;
+use web_dazuoye;
+create table user_password(
+pid varchar(10) not null,
+password varchar(20),
+primary key(pid),
+foreign key(pid) references users(pid) on delete cascade);
+
+INSERT INTO user_password VALUES
+('1971089','qwer111'),
+('3051077','qwer123'),
+('3051129','asd123'),
+('3091001','qwer143'),
+('3101090','qwer121'),
+('3111019','qwer567');
+
+create table users(
+pid varchar(10) not null,
+name varchar(10),
+sex enum("男","女"),
+beginwork date,
+restvacation int,
+type enum("员工","行政","部门","副总","总经理"),
+department enum("行政","人事","财务","开发","产品","测试","运营"),
+primary key(pid));
+
+create table punch_record(
+rid int primary key not null auto_increment,
+pid varchar(10) not null,
+begintime date,
+endtime date,
+foreign key(pid) references users(pid) on delete cascade)auto_increment=1001;
+
+create table leave_record(
+rid int primary key not null auto_increment,
+pid varchar(10) not null,
+begintime date,
+endtime date,
+type enum("事假","病假","年假","产假","婚假","丧假"),
+reason varchar(100),
+status enum("批准","未批准","未审核","等待副总经理审核","等待总经理审核"),
+foreign key(pid) references users(pid) on delete cascade)auto_increment=1001;
+
+create table goout_record(
+rid int primary key not null auto_increment,
+pid varchar(10) not null,
+begintime date,
+endtime date,
+reason varchar(100),
+status enum("批准","未批准","未审核","等待副总经理审核","等待总经理审核"),
+foreign key(pid) references users(pid) on delete cascade)auto_increment=1001;
+
+
+
+
+
+
+
