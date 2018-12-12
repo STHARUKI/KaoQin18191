@@ -1,0 +1,14 @@
+.show-user-div {
+  background-image: url('../../assets/image/indexBg.jpg');
+  background-size: cover;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  bottom: 0;
+}
+.showuser-toolbar {
+  background-color: transparent;
+}

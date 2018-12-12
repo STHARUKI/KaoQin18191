@@ -22,10 +22,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
+            "styles": [	
+              "src/styles.css"	  
+			],
+            "scripts": [
+]
           },
           "configurations": {
             "production": {

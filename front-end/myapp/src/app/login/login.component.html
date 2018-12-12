@@ -1,0 +1,29 @@
+<div class="asd">
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title class="example-card-title">登录</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="工号" [(ngModel)]="user.pid" name="username" required>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+        <td><mat-form-field class="example-full-width">
+          <input matInput placeholder="密码" [(ngModel)]="user.password" type="password" name="password" required>
+        </mat-form-field></td>
+      </tr></table>
+    </form>
+    <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+  </mat-card-content>
+  <mat-card-actions class="example-button">
+    <button mat-raised-button (click)="login()" color="primary">登录</button>
+  </mat-card-actions>
+</mat-card>
+</div>
+

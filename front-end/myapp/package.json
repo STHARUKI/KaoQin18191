@@ -1,6 +1,6 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
+  "name": "web_homework",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,18 +11,25 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~7.0.0",
+    "@angular/animations": "^7.0.4",
+    "@angular/cdk": "^7.1.1",
     "@angular/common": "~7.0.0",
     "@angular/compiler": "~7.0.0",
     "@angular/core": "~7.0.0",
     "@angular/forms": "~7.0.0",
     "@angular/http": "~7.0.0",
+    "@angular/material": "^7.1.1",
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "angular-2-local-storage": "^2.0.0",
+    "angular-local-storage": "^0.7.1",
     "core-js": "^2.5.4",
     "crypto-js": "^3.1.9-1",
     "cryptojs": "^2.5.3",
+    "layui-laydate": "^5.0.9",
+    "ngx-cookie-service": "^2.1.0",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -47,5 +54,17 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.1"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.",
+  "main": "app.js",
+  "author": "434",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/STHARUKI/KaoQin18191/tree/master/front-end/myapp"
+  },
+  "keywords": [
+    "angular",
+    "typescript"
+  ]
 }

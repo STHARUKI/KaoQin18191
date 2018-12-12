@@ -1,31 +1,6 @@
-<body>
-    <div style="text-align:center">
-      <h1>
-        Welcome to {{ title }}!
-      </h1>
-    </div>
 
-    <div style="text-align:center">
-      <p>
-        <label> 请输入工号： </label>
-        <br/>
-        <input [(ngModel)]="user.pid"/>
-      </p>
-      <p>
-        <label> 请输入密码： </label>
-        <br/>
-        <input type="password" [(ngModel)]="user.password"/>
-      </p>
-      <p>
-      <button (click)="login()">登录</button>
-      </p>
-      <p>
-      <button (click)="logout()">注销</button>
-      </p>
-      <p>
-      <button (click)="getUser()">尝试获得数据</button>
-      </p>
+<head>
+  <base href="/">
+</head>
 
-    </div>
-    </body>
 <router-outlet></router-outlet>

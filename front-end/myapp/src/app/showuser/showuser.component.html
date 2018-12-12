@@ -1,3 +1,22 @@
+<div style="text-align:center" class="show-user-div">
+
+<mat-toolbar class="showuser-toolbar">
+    <span>欢迎来到考勤打卡系统！{{pid}}</span>
+</mat-toolbar>
 <p>
-  showuser works!
+  <button (click)="punch()">打卡</button>
 </p>
+<p>
+  <button (click)="logout()">注销</button>
+</p>
+
+<div class="showuser-left">
+</div>
+<div>
+
+</div>
+
+
+<app-showleave></app-showleave>
+<app-showout></app-showout>
+</div>
