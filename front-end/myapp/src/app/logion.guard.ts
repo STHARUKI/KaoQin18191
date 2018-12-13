@@ -1,3 +1,4 @@
+import { SavedUser } from './saveduser';
 import { Res } from './res';
 
 import { Injectable } from '@angular/core';
@@ -22,12 +23,18 @@ export class LogionGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> {
       this.res = await this.getData();
-      if (this.res.code === '200') {
-        this.isLogin = true;
+      if (SavedUser.getUser()) {
+        if (this.res.code === '200') {
+          this.isLogin = true;
+        } else {
+          alert('请登录！');
+          this.isLogin = false;
+          this.router.navigateByUrl('/login');
+        }
       } else {
-        alert('请登录！');
-        this.isLogin = false;
-        this.router.navigateByUrl('/login');
+        alert('登录已过期。请重新登录！');
+          this.isLogin = false;
+          this.router.navigateByUrl('/login');
       }
       return this.isLogin;
   }

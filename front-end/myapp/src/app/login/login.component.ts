@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { SavedUser } from '../saveduser';
 
 @Component({
   selector: 'app-login',
@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
       this.http.post('http://112.74.164.166:3000/login', this.user,
       {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
       if (JSON.parse(JSON.stringify(data)).code === '200') {
-        this.isHidden = true;
         this.url = '/showuser';
-        this.router.navigate([this.url], {queryParams: {'pid': this.user.pid}});
+        SavedUser.setUser(this.user);
+        this.router.navigateByUrl(this.url);
       } else {
         alert('登录失败');
       }

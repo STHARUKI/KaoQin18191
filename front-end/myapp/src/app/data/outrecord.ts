@@ -1,9 +1,9 @@
-export class LeaveInfo {
-  rid: string;
+export class OutRecord {
   pid: string;
+  name: string;
+  department: string;
   begintime: string;
   endtime: string;
-  ltype: string;
   reason: string;
   status: string;
 }

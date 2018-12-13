@@ -1,10 +1,11 @@
-
+import { DataIntService } from './../data-int.service';
+import { SavedUser } from './../saveduser';
 import { PunchInfo } from './../punchinfo';
 import { UserInfo } from './../userinfo';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
+import { User } from './../user';
+import { LeaveInfo } from '../leaveinfo';
 
 @Component({
   selector: 'app-showuser',
@@ -13,35 +14,37 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 
+
 export class ShowuserComponent implements OnInit {
 
-  pid = '';
-
+  user: User;
   userInfo: UserInfo;
   type: string;
+  typeHigher = 1;
+  typeHighest = 1;
   punchInfo = new PunchInfo();
   punchCount = 0;
 
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) { }
+  constructor(private http: HttpClient, private dataIntService: DataIntService) {
+    this.user = SavedUser.getUser();
+   }
 
 
 
-  ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(param => {
-      this.pid = param['pid'];
+
+  async ngOnInit() {
+    await this.getUserinfo().then(data => {
+      SavedUser.setUserInfo(data[0]);
     });
-  }
+    if (SavedUser.getUserInfo().type === '员工') {
+      this.typeHigher = null;
+      this.typeHighest = null;
+    } else if (SavedUser.getUserInfo().type === '行政') {
+      this.typeHighest = null;
+    } else {
 
-  private getUserinfo(): Promise<UserInfo> {
-    const url = 'http://112.74.164.166:3000/userid/' + this.pid;
-    return this.http.get<UserInfo>(url, {withCredentials: true}).toPromise();
-  }
-
-  private async  getType(): Promise<string> {
-    this.userInfo = await this.getUserinfo();
-    console.log(this.userInfo[0]);
-    return this.userInfo[0].type;
+    }
   }
 
   logout(): void {
@@ -64,7 +67,7 @@ export class ShowuserComponent implements OnInit {
     } else {
       const date: Date = new Date();
       this.punchInfo.endtime = this.dateFormat(date);
-      this.punchInfo.pid = this.pid;
+      this.punchInfo.pid = SavedUser.getUser().pid;
       this.punchCount = 0;
       this.http.post('http://112.74.164.166:3000/punch/user', this.punchInfo,
       {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
@@ -76,7 +79,6 @@ export class ShowuserComponent implements OnInit {
       });
     }
   }
-
   private dateFormat(date: Date): string {
     const year = date.getFullYear().toString();
     const month = (date.getUTCMonth() + 1).toString();
@@ -87,6 +89,41 @@ export class ShowuserComponent implements OnInit {
     return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
   }
 
+  private getUserinfo() {
+    const url = 'http://112.74.164.166:3000/userid/' + this.user.pid;
+    return this.http.get<UserInfo>(url, {withCredentials: true}).toPromise();
+  }
 
+  getLeaveSelf() {
+    this.dataIntService.setFlag(1);
+  }
+
+  getOutSelf() {
+    this.dataIntService.setFlag(2);
+  }
+
+  getPunchSelf() {
+    this.dataIntService.setFlag(3);
+  }
+
+  newLeaveSelf() {
+    this.dataIntService.setFlag(4);
+  }
+
+  newOutSelf() {
+    this.dataIntService.setFlag(5);
+  }
+
+  getLeaveRecord() {
+    this.dataIntService.setFlag(6);
+  }
+
+  getOutRecord() {
+    this.dataIntService.setFlag(7);
+  }
+
+  getPunchRecord() {
+    this.dataIntService.setFlag(8);
+  }
 
 }

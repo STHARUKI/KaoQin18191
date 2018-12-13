@@ -1,3 +1,482 @@
-<p>
-  getdata works!
-</p>
+<div [hidden]="isHiddenLeaveSelf">
+  <div class="mat-elevation-z8" style="text-align:left">
+    <table mat-table [dataSource]="dataSourceLeaveSelf" >
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="rid">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.rid}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="begintime">
+        <th mat-header-cell *matHeaderCellDef> 开始时间 </th>
+        <td mat-cell *matCellDef="let element"> {{element.begintime}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="endtime">
+        <th mat-header-cell *matHeaderCellDef> 结束时间 </th>
+        <td mat-cell *matCellDef="let element"> {{element.endtime}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> 类型 </th>
+        <td mat-cell *matCellDef="let element"> {{element.ltype}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef> 理由 </th>
+        <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> 状态 </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaveSelf"></tr>
+      <tr mat-row *matRowDef="let row; let element; columns: displayedColumnsLeaveSelf;" (click)="changeLeaveSelf(element)" ></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<div [hidden]="isHiddenOutSelf">
+    <div class="mat-elevation-z8" style="text-align:left">
+      <table mat-table [dataSource]="dataSourceOutSelf" >
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="rid">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.rid}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="begintime">
+          <th mat-header-cell *matHeaderCellDef> 开始时间 </th>
+          <td mat-cell *matCellDef="let element"> {{element.begintime}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="endtime">
+          <th mat-header-cell *matHeaderCellDef> 结束时间 </th>
+          <td mat-cell *matCellDef="let element"> {{element.endtime}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef> 理由 </th>
+          <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> 状态 </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsOutSelf"></tr>
+        <tr mat-row *matRowDef="let row; let element; columns: displayedColumnsOutSelf;" (click)="changeOutSelf(element)" ></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+
+<div [hidden]="isHiddenPunchSelf">
+    <div class="mat-elevation-z8" style="text-align:left">
+      <table mat-table [dataSource]="dataSourcePunchSelf" >
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="rid">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.rid}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="begintime">
+          <th mat-header-cell *matHeaderCellDef> 开始时间 </th>
+          <td mat-cell *matCellDef="let element"> {{element.begintime}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="endtime">
+          <th mat-header-cell *matHeaderCellDef> 结束时间 </th>
+          <td mat-cell *matCellDef="let element"> {{element.endtime}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPunchSelf"></tr>
+        <tr mat-row *matRowDef="let row; let element;columns: displayedColumnsPunchSelf;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+
+<div [hidden]="isHiddenNewLeaveSelf">
+    <mat-card class="getdata-matcard">
+        <mat-card-header>
+            <mat-card-title>提交请假申请</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form >
+            <table cellspacing="0">
+              <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="开始时间" [matDatepicker]="myDatepickerLeaveBegin" [(ngModel)]="begintime"  name="begintime" required>
+                        <mat-datepicker-toggle [for]="myDatepickerLeaveBegin"></mat-datepicker-toggle>
+                        <mat-datepicker #myDatepickerLeaveBegin></mat-datepicker>
+                    </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                  <td>
+                      <mat-form-field class="example-full-width">
+                          <input matInput placeholder="结束时间" [matDatepicker]="myDatepickerLeaveEnd" [(ngModel)]="endtime" name="endtime" required>
+                          <mat-datepicker-toggle [for]="myDatepickerLeaveEnd"></mat-datepicker-toggle>
+                          <mat-datepicker #myDatepickerLeaveEnd></mat-datepicker>
+                      </mat-form-field>
+                  </td>
+                </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <mat-select placeholder="类型" [(value)]="newLeaveInfo.ltype" name="type">
+                      <mat-option value="病假">病假</mat-option>
+                      <mat-option value="事假">事假</mat-option>
+                      <mat-option value="婚假">婚假</mat-option>
+                      <mat-option value="产假">产假</mat-option>
+                      <mat-option value="年假">年假</mat-option>
+                      <mat-option value="丧假">丧假</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="理由" [(ngModel)]="newLeaveInfo.reason"  name="reason" required>
+                  </mat-form-field>
+                </td>
+              </tr>
+          </table>
+          </form>
+        </mat-card-content>
+        <mat-card-actions class="getdata-matcard-button">
+            <button mat-button (click)="onNewUserLeaveSubmit()">提交</button>
+            <button mat-button (click)="onNewUserLeaveCancel()">取消</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<div [hidden]="isHiddenNewOutSelf">
+      <mat-card class="getdata-matcard">
+          <mat-card-header>
+              <mat-card-title>提交请假申请</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form >
+              <table cellspacing="0">
+                <tr>
+                  <td>
+                      <mat-form-field class="example-full-width">
+                          <input matInput placeholder="开始时间" [matDatepicker]="myDatepickerOutBegin" [(ngModel)]="begintime"  name="begintime" required>
+                          <mat-datepicker-toggle [for]="myDatepickerOutBegin"></mat-datepicker-toggle>
+                          <mat-datepicker #myDatepickerOutBegin></mat-datepicker>
+                      </mat-form-field>
+                  </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="结束时间" [matDatepicker]="myDatepickerOutEnd" [(ngModel)]="endtime" name="endtime" required>
+                            <mat-datepicker-toggle [for]="myDatepickerOutEnd"></mat-datepicker-toggle>
+                            <mat-datepicker #myDatepickerOutEnd></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                  </tr>
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="理由" [(ngModel)]="newOutInfo.reason"  name="reason" required>
+                    </mat-form-field>
+                  </td>
+                </tr>
+            </table>
+            </form>
+          </mat-card-content>
+          <mat-card-actions class="getdata-matcard-button">
+              <button mat-button (click)="onNewUserOutSubmit()">提交</button>
+              <button mat-button (click)="onNewUserOutCancel()">取消</button>
+          </mat-card-actions>
+      </mat-card>
+</div>
+
+<div *ngIf="selectedElementOutSelf">
+        <mat-card class="getdata-matcard">
+            <mat-card-header>
+                <mat-card-title>提交请假申请</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <form >
+                <table cellspacing="0">
+                  <tr>
+                    <td>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="开始时间" [matDatepicker]="myDatepickerOutBeginChange" [(ngModel)]="begintime"  name="begintime" required>
+                            <mat-datepicker-toggle [for]="myDatepickerOutBeginChange"></mat-datepicker-toggle>
+                            <mat-datepicker #myDatepickerOutBegin></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <mat-form-field class="example-full-width">
+                              <input matInput placeholder="结束时间" [matDatepicker]="myDatepickerOutEndChange" [(ngModel)]="endtime" name="endtime" required>
+                              <mat-datepicker-toggle [for]="myDatepickerOutEndChange"></mat-datepicker-toggle>
+                              <mat-datepicker #myDatepickerOutEnd></mat-datepicker>
+                          </mat-form-field>
+                      </td>
+                    </tr>
+                  <tr>
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="理由" [(ngModel)]="selectedElementOutSelf.reason"  name="reason" required>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+              </table>
+              </form>
+            </mat-card-content>
+            <mat-card-actions class="getdata-matcard-button">
+                <button mat-button (click)="onChangeUserOutSubmit()">提交</button>
+                <button mat-button (click)="onChangeUserOutCancel()">取消</button>
+            </mat-card-actions>
+        </mat-card>
+</div>
+
+<div *ngIf="selectedElementLeaveSelf">
+    <mat-card class="getdata-matcard">
+        <mat-card-header>
+            <mat-card-title>修改请假申请</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form >
+            <table cellspacing="0">
+              <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="开始时间" [matDatepicker]="myDatepickerLeaveBeginChange" [(ngModel)]="begintime"  name="begintime" required>
+                        <mat-datepicker-toggle [for]="myDatepickerLeaveBeginChange"></mat-datepicker-toggle>
+                        <mat-datepicker #myDatepickerLeaveBeginChange></mat-datepicker>
+                    </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                  <td>
+                      <mat-form-field class="example-full-width">
+                          <input matInput placeholder="结束时间" [matDatepicker]="myDatepickerLeaveEndChange" [(ngModel)]="endtime" name="endtime" required>
+                          <mat-datepicker-toggle [for]="myDatepickerLeaveEndChange"></mat-datepicker-toggle>
+                          <mat-datepicker #myDatepickerLeaveEndChange></mat-datepicker>
+                      </mat-form-field>
+                  </td>
+                </tr>
+                <tr>
+                    <td>
+                      <mat-form-field class="example-full-width">
+                        <mat-select placeholder="类型" [(value)]="selectedElementLeaveSelf.type" name="type">
+                          <mat-option value="病假">病假</mat-option>
+                          <mat-option value="事假">事假</mat-option>
+                          <mat-option value="婚假">婚假</mat-option>
+                          <mat-option value="产假">产假</mat-option>
+                          <mat-option value="年假">年假</mat-option>
+                          <mat-option value="丧假">丧假</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+              <tr>
+                <td>
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="理由" [(ngModel)]="selectedElementLeaveSelf.reason"  name="reason" required>
+                  </mat-form-field>
+                </td>
+              </tr>
+          </table>
+          </form>
+        </mat-card-content>
+        <mat-card-actions class="getdata-matcard-button">
+            <button mat-button (click)="onChangeUserLeaveSubmit()">提交</button>
+            <button mat-button (click)="onChangeUserLeaveCancel()">取消</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<div [hidden]="isHiddenLeaveRecord" style="text-align:left">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilterLeaveRecord($event.target.value)" placeholder="查询">
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceLeaveRecord">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="pid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 工号 </th>
+            <td mat-cell *matCellDef="let row"> {{row.pid}} </td>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 姓名 </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 部门 </th>
+            <td mat-cell *matCellDef="let row"> {{row.department}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="restvacation">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> 剩余年假时间 </th>
+              <td mat-cell *matCellDef="let row"> {{row.restvacation}} </td>
+            </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="begintime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 开始时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="endtime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 结束时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="ltype">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 请假类型 </th>
+            <td mat-cell *matCellDef="let row" > {{row.ltype}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="reason">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 请假原因 </th>
+            <td mat-cell *matCellDef="let row" > {{row.reason}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 状态 </th>
+            <td mat-cell *matCellDef="let row" > {{row.status}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLeaveRecord"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsLeaveRecord;">
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+      </div>
+</div>
+
+<div [hidden]="isHiddenOutRecord" style="text-align:left">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilterOutRecord($event.target.value)" placeholder="查询">
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceOutRecord">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="pid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 工号 </th>
+            <td mat-cell *matCellDef="let row"> {{row.pid}} </td>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 姓名 </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 部门 </th>
+            <td mat-cell *matCellDef="let row"> {{row.department}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="begintime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 开始时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="endtime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 结束时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="reason">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 外出原因 </th>
+            <td mat-cell *matCellDef="let row" > {{row.reason}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 状态 </th>
+            <td mat-cell *matCellDef="let row" > {{row.status}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsOutRecord"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsOutRecord;">
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+      </div>
+</div>
+
+<div [hidden]="isHiddenPunchRecord" style="text-align:left">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilterPunchRecord($event.target.value)" placeholder="查询">
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourcePunchRecord">
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="pid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 工号 </th>
+            <td mat-cell *matCellDef="let row"> {{row.pid}} </td>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 姓名 </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 部门 </th>
+            <td mat-cell *matCellDef="let row"> {{row.department}} </td>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="begintime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 开始时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="endtime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> 结束时间 </th>
+            <td mat-cell *matCellDef="let row" > {{row.begintime}} </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsPunchRecord"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsPunchRecord;">
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+      </div>
+</div>

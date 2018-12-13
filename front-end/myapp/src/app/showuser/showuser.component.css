@@ -1,4 +1,4 @@
-.show-user-div {
+.showuser-div {
   background-image: url('../../assets/image/indexBg.jpg');
   background-size: cover;
   position: absolute;
@@ -7,8 +7,46 @@
   top: 0;
   bottom: 0;
   left: 0;
-  bottom: 0;
+}
+.container {
+  position: absolute;
+  width: 100%!important;
+  height: 100%;
+  left: 0;
+  right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  max-width: inherit;
+}
+.col-md-2 {
+  position: absolute;
+  background-color: aliceblue;
+  left: 0;
+  width: 10%;
+  height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+.col-md-9 {
+  position: absolute;
+  width: 100%!important;
+  left: 10%;
+  height: 100%;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  max-width: 90%;
 }
 .showuser-toolbar {
-  background-color: transparent;
+  position: relative;
+  width: 100%;
+  left: auto;
+  height: 6%;
 }
+.showuser-fill {
+  flex: 1 1 auto;
+}
+
+
