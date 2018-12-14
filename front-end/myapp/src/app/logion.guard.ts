@@ -23,18 +23,13 @@ export class LogionGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> {
       this.res = await this.getData();
-      if (SavedUser.getUser()) {
-        if (this.res.code === '200') {
-          this.isLogin = true;
-        } else {
-          alert('请登录！');
-          this.isLogin = false;
-          this.router.navigateByUrl('/login');
-        }
+      if (this.res.code === '200') {
+        this.isLogin = true;
+        SavedUser.setUser({pid: this.res.msg, password: ''});
       } else {
-        alert('登录已过期。请重新登录！');
-          this.isLogin = false;
-          this.router.navigateByUrl('/login');
+        alert('请登录！');
+        this.isLogin = false;
+        this.router.navigateByUrl('/login');
       }
       return this.isLogin;
   }

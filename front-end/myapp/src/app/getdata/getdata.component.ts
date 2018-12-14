@@ -11,6 +11,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { LeaveInfo } from '../leaveinfo';
 import { MatPaginator, MatTableDataSource, DateAdapter, MAT_DATE_FORMATS, MatDateFormats } from '@angular/material';
+import { Router } from '@angular/router';
+import {ChangeDetectorRef} from '@angular/core';
+import { UserInfo } from '../userinfo';
 
 
 @Component({
@@ -33,6 +36,8 @@ export class GetdataComponent implements OnInit {
   flag: number;
   begintime: Date;
   endtime: Date;
+  type: string;
+  userinfo: UserInfo;
 
   dataSourceLeaveSelf: MatTableDataSource<LeaveInfo>;
   displayedColumnsLeaveSelf: string[];
@@ -56,39 +61,55 @@ export class GetdataComponent implements OnInit {
   dataSourceLeaveRecord: MatTableDataSource<LeaveRecord>;
   isHiddenLeaveRecord = true;
   displayedColumnsLeaveRecord: string[];
+  selectedElementLeaveRecord;
 
   dataSourceOutRecord: MatTableDataSource<OutRecord>;
   isHiddenOutRecord = true;
   displayedColumnsOutRecord: string[];
+  selectedElementOutRecord;
+  newLeaveRecord: LeaveInfo;
+  newOutRecord: OutInfo;
 
   dataSourcePunchRecord: MatTableDataSource<PunchRecord>;
   isHiddenPunchRecord = true;
   displayedColumnsPunchRecord: string[];
 
 
-  constructor(private http: HttpClient, private dataIntService: DataIntService) {
-    this.dataIntService.getFlag().subscribe(data => {
-      if (data === 1) {
-        this.getUserLeaveSelf();
-      } else if (data === 2) {
-        this.getUserOutSelf();
-      } else if (data === 3) {
-        this.getUserPunchSelf();
-      } else if (data === 4) {
-        this.newUserLeaveSelf();
-      } else if (data === 5) {
-        this.newUserOutSelf();
-      } else if (data === 6) {
-        this.getLeaveRecord();
-      } else if (data === 7) {
-        this.getOutRecord();
-      } else if (data === 8) {
-        this.getPunchRecord();
-      }
-    });
+  constructor(private http: HttpClient, private dataIntService: DataIntService,
+    private router: Router, private changeDetectorRef: ChangeDetectorRef) {
+
   }
 
   ngOnInit() {
+    this.dataIntService.getFlag().subscribe(data => {
+
+      this.type = SavedUser.getUserInfo().type;
+      if (data === 1) {
+        this.getUserLeaveSelf();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 2) {
+        this.getUserOutSelf();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 3) {
+        this.getUserPunchSelf();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 4) {
+        this.newUserLeaveSelf();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 5) {
+        this.newUserOutSelf();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 6) {
+        this.getLeaveRecord();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 7) {
+        this.getOutRecord();
+        this.changeDetectorRef.detectChanges();
+      } else if (data === 8) {
+        this.getPunchRecord();
+        this.changeDetectorRef.detectChanges();
+      }
+    });
   }
 
 
@@ -115,10 +136,10 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/leave/' + SavedUser.getUser().pid;
     this.http.get<LeaveInfo[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setUserLeaveSelf(data);
+      this.displayedColumnsLeaveSelf = ['rid', 'begintime', 'endtime', 'type', 'reason', 'status'];
+      this.dataSourceLeaveSelf = new MatTableDataSource<LeaveInfo>(SavedUser.getUserLeaveSelf());
+      this.dataSourceLeaveSelf.paginator = this.paginator.toArray()[0];
     });
-    this.displayedColumnsLeaveSelf = ['rid', 'begintime', 'endtime', 'type', 'reason', 'status'];
-    this.dataSourceLeaveSelf = new MatTableDataSource<LeaveInfo>(SavedUser.getUserLeaveSelf());
-    this.dataSourceLeaveSelf.paginator = this.paginator.toArray()[0];
   }
 
   getUserOutSelf() {
@@ -134,10 +155,10 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/out/' + SavedUser.getUser().pid;
     this.http.get<OutInfo[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setUserOutSelf(data);
-    });
     this.displayedColumnsOutSelf = ['rid', 'begintime', 'endtime', 'reason', 'status'];
     this.dataSourceOutSelf = new MatTableDataSource<OutInfo>(SavedUser.getUserOutSelf());
     this.dataSourceOutSelf.paginator =  this.paginator.toArray()[1];
+    });
   }
 
   getUserPunchSelf() {
@@ -153,10 +174,10 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/punch/' + SavedUser.getUser().pid;
     this.http.get<PunchInfo[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setUserPunchSelf(data);
-    });
     this.displayedColumnsPunchSelf = ['rid', 'begintime', 'endtime'];
     this.dataSourcePunchSelf = new MatTableDataSource<PunchInfo>(SavedUser.getUserPunchSelf());
     this.dataSourcePunchSelf.paginator =  this.paginator.toArray()[2];
+    });
   }
 
   newUserLeaveSelf() {
@@ -224,7 +245,11 @@ export class GetdataComponent implements OnInit {
   }
 
   changeOutSelf(element) {
-    this.selectedElementOutSelf = element;
+    if (element.status === '未批准' || element.status === '未审核') {
+      this.selectedElementOutSelf = element;
+    } else {
+      alert('不能修改已经批准的请求或正在审核中的请求！');
+    }
   }
 
   onChangeUserOutSubmit() {
@@ -248,7 +273,11 @@ export class GetdataComponent implements OnInit {
   }
 
   changeLeaveSelf(element) {
-    this.selectedElementLeaveSelf = element;
+    if (element.status === '未批准' || element.status === '未审核') {
+      this.selectedElementLeaveSelf = element;
+    } else {
+      alert('不能修改已经批准的请求或正在审核中的请求！');
+    }
   }
 
   onChangeUserLeaveSubmit() {
@@ -284,14 +313,13 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/leave';
     this.http.get<LeaveRecord[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setLeaveRecord(data);
-    });
-    this.displayedColumnsLeaveRecord = ['pid', 'name', 'department', 'restvacation', 'begintime', 'endtime', 'ltype', 'reason', 'status'];
+    this.displayedColumnsLeaveRecord = ['pid', 'name', 'department', 'restvacation', 'begintime', 'endtime', 'ltype', 'status'];
     this.dataSourceLeaveRecord = new MatTableDataSource<LeaveRecord>(SavedUser.getLeaveRecord());
     this.dataSourceLeaveRecord.paginator =  this.paginator.toArray()[3];
+    });
   }
 
   applyFilterLeaveRecord(filterValue: string) {
-    console.log(filterValue);
     this.dataSourceLeaveRecord.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSourceLeaveRecord.paginator) {
@@ -312,10 +340,10 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/out';
     this.http.get<OutRecord[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setOutRecord(data);
-    });
     this.displayedColumnsOutRecord = ['pid', 'name', 'department', 'begintime', 'endtime', 'reason', 'status'];
     this.dataSourceOutRecord = new MatTableDataSource<OutRecord>(SavedUser.getOutRecord());
     this.dataSourceOutRecord.paginator =  this.paginator.toArray()[4];
+    });
   }
 
   applyFilterOutRecord(filterValue: string) {
@@ -339,10 +367,10 @@ export class GetdataComponent implements OnInit {
     const url = 'http://112.74.164.166:3000/punch';
     this.http.get<PunchRecord[]>(url, {withCredentials: true}).toPromise().then(data => {
       SavedUser.setPunchRecord(data);
-    });
     this.displayedColumnsPunchRecord = ['pid', 'name', 'department', 'begintime', 'endtime'];
     this.dataSourcePunchRecord = new MatTableDataSource<PunchRecord>(SavedUser.getPunchRecord());
     this.dataSourcePunchRecord.paginator =  this.paginator.toArray()[5];
+    });
   }
 
   applyFilterPunchRecord(filterValue: string) {
@@ -351,5 +379,146 @@ export class GetdataComponent implements OnInit {
     if (this.dataSourcePunchRecord.paginator) {
       this.dataSourcePunchRecord.paginator.firstPage();
     }
+  }
+
+  onChangeLeaveRecord(element) {
+    this.selectedElementLeaveRecord = element;
+  }
+
+  onChangeOutRecord(element) {
+    this.selectedElementOutRecord = element;
+  }
+
+  onChangeLeaveRecordYes() {
+    const date1 = new Date(this.selectedElementLeaveRecord.begintime);
+    const date2 = new Date(this.selectedElementLeaveRecord.endtime);
+    const time1 = date1.getTime() / (1000 * 60 * 60 * 24);
+    const time2 = date2.getTime() / (1000 * 60 * 60 * 24);
+    const url = 'http://112.74.164.166:3000/leave/user/' + this.selectedElementLeaveRecord.rid;
+    if ((time2 - time1) < 3) {
+      if (SavedUser.getUserInfo().type === '部门') {
+        this.selectedElementLeaveRecord.status = '等待副总经理审核';
+      } else if (SavedUser.getUserInfo().type === '副总') {
+        this.selectedElementLeaveRecord.status = '批准';
+      } else if (SavedUser.getUserInfo().type === '总经理') {
+        this.selectedElementLeaveRecord.status = '批准';
+      }
+    } else {
+      if (SavedUser.getUserInfo().type === '部门') {
+        this.selectedElementLeaveRecord.status = '等待副总经理审核';
+      } else if (SavedUser.getUserInfo().type === '副总') {
+        this.selectedElementLeaveRecord.status = '等待总经理审核';
+      } else if (SavedUser.getUserInfo().type === '总经理') {
+        this.selectedElementLeaveRecord.status = '批准';
+      }
+    }
+    this.newLeaveInfo.pid = this.selectedElementLeaveRecord.pid;
+    this.newLeaveInfo.begintime = this.selectedElementLeaveRecord.begintime;
+    this.newLeaveInfo.endtime = this.selectedElementLeaveRecord.endtime;
+    this.newLeaveInfo.ltype = this.selectedElementLeaveRecord.ltype;
+    this.newLeaveInfo.reason = this.selectedElementLeaveRecord.reason;
+    this.newLeaveInfo.status = this.selectedElementLeaveRecord.status;
+    this.http.post<Res>(url, this.newLeaveInfo,
+      {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
+        if (data.code === '200') {
+
+        } else {
+          alert('操作失败！');
+        }
+      });
+    if (this.selectedElementLeaveRecord.ltype === '年假') {
+      const numbr = SavedUser.getUserInfo().restvacation  - time2 + time1;
+      const url2 = 'http://112.74.164.166:3000/userid/' + SavedUser.getUserInfo().pid;
+      const jsonPost = {
+        restvacation: numbr
+      };
+      this.http.post<Res>(url2, jsonPost,
+        {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe();
+    }
+    this.selectedElementLeaveRecord = null;
+  }
+
+  onChangeLeaveRecordNo() {
+    const url = 'http://112.74.164.166:3000/leave/user/' + this.selectedElementLeaveRecord.rid;
+    this.newLeaveInfo.pid = this.selectedElementLeaveRecord.pid;
+    this.newLeaveInfo.begintime = this.selectedElementLeaveRecord.begintime;
+    this.newLeaveInfo.endtime = this.selectedElementLeaveRecord.endtime;
+    this.newLeaveInfo.ltype = this.selectedElementLeaveRecord.ltype;
+    this.newLeaveInfo.reason = this.selectedElementLeaveRecord.reason;
+    this.newLeaveInfo.status = '未批准';
+    this.http.post<Res>(url, this.newLeaveInfo,
+      {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
+        if (data.code === '200') {
+          alert('操作成功！');
+        } else {
+          alert('操作失败！');
+        }
+      });
+    this.selectedElementLeaveRecord = null;
+  }
+
+  onChangeLeaveRecordCancel() {
+    this.selectedElementLeaveRecord = null;
+  }
+
+  onChangeOutRecordYes() {
+    const date1 = new Date(this.selectedElementOutRecord.begintime);
+    const date2 = new Date(this.selectedElementOutRecord.endtime);
+    const time1 = date1.getTime() / (1000 * 60 * 60 * 24);
+    const time2 = date2.getTime() / (1000 * 60 * 60 * 24);
+    const url = 'http://112.74.164.166:3000/out/user/' + this.selectedElementOutRecord.rid;
+    if ((time2 - time1) < 3) {
+      if (SavedUser.getUserInfo().type === '部门') {
+        this.selectedElementOutRecord.status = '等待副总经理审核';
+      } else if (SavedUser.getUserInfo().type === '副总') {
+        this.selectedElementOutRecord.status = '批准';
+      } else if (SavedUser.getUserInfo().type === '总经理') {
+        this.selectedElementOutRecord.status = '批准';
+      }
+    } else {
+      if (SavedUser.getUserInfo().type === '部门') {
+        this.selectedElementOutRecord.status = '等待副总经理审核';
+      } else if (SavedUser.getUserInfo().type === '副总') {
+        this.selectedElementOutRecord.status = '等待总经理审核';
+      } else if (SavedUser.getUserInfo().type === '总经理') {
+        this.selectedElementOutRecord.status = '批准';
+      }
+    }
+    this.newOutInfo.pid = this.selectedElementOutRecord.pid;
+    this.newOutInfo.begintime = this.selectedElementOutRecord.begintime;
+    this.newOutInfo.endtime = this.selectedElementOutRecord.endtime;
+    this.newOutInfo.reason = this.selectedElementOutRecord.reason;
+    this.newOutInfo.status = this.selectedElementOutRecord.status;
+    this.http.post<Res>(url, this.newOutInfo,
+      {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
+        if (data.code === '200') {
+          alert('操作成功！');
+        } else {
+          alert('操作失败！');
+        }
+      });
+    this.selectedElementOutRecord = null;
+  }
+
+  onChangeOutRecordNo() {
+    const url = 'http://112.74.164.166:3000/out/user/' + this.selectedElementOutRecord.rid;
+    this.newOutInfo.pid = this.selectedElementOutRecord.pid;
+    this.newOutInfo.begintime = this.selectedElementOutRecord.begintime;
+    this.newOutInfo.endtime = this.selectedElementOutRecord.endtime;
+    this.newOutInfo.reason = this.selectedElementOutRecord.reason;
+    this.newOutInfo.status = '未批准';
+    this.http.post<Res>(url, this.newOutInfo,
+      {withCredentials: true, headers: {'Content-Type': 'application/json'}}).subscribe(data => {
+        if (data.code === '200') {
+          alert('操作成功！');
+        } else {
+          alert('操作失败！');
+        }
+      });
+    this.selectedElementOutRecord = null;
+  }
+
+  onChangeOutRecordCancel() {
+    this.selectedElementOutRecord = null;
   }
 }

@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
   MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatPaginatorModule,
-  MatDatepickerModule, MatNativeDateModule, MatSelectModule
+  MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatListModule
 } from '@angular/material';
 import { GetdataComponent } from './getdata/getdata.component';
 import 'hammerjs';
@@ -44,7 +44,8 @@ import 'hammerjs';
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule
   ],
   providers: [LogionGuard, AppComponent, DataIntService],
   bootstrap: [AppComponent]

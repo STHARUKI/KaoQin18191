@@ -1,4 +1,5 @@
 export class OutRecord {
+  rid: string;
   pid: string;
   name: string;
   department: string;

@@ -1,6 +1,5 @@
 .showuser-div {
-  background-image: url('../../assets/image/indexBg.jpg');
-  background-size: cover;
+  background-color: white;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -22,7 +21,6 @@
 }
 .col-md-2 {
   position: absolute;
-  background-color: aliceblue;
   left: 0;
   width: 10%;
   height: 100%;
@@ -40,6 +38,7 @@
   max-width: 90%;
 }
 .showuser-toolbar {
+  background-color: whitesmoke;
   position: relative;
   width: 100%;
   left: auto;
@@ -47,6 +46,44 @@
 }
 .showuser-fill {
   flex: 1 1 auto;
+}
+.shouwuser-example-card {
+  width: 100%;
+  height: 100%;
+  padding-left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  left:0;
+  right: 0;
+}
+.showuser-card-table {
+  width: 100%;
+  right: 0;
+}
+.showuser-card-button {
+  text-align: left;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.showuser-card-header {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 12px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  align-self: center;
+}
+.showuser-matlistitemh {
+  font-weight: 900;
+  font-size: 14px;
+}
+.showuser-matlistitem {
+  font-size: 10px;
+  font-weight: 100;
 }
 
 

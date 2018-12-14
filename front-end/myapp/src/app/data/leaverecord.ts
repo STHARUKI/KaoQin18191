@@ -1,4 +1,5 @@
 export class LeaveRecord {
+  rid: string;
   pid: string;
   name: string;
   restvacation: number;

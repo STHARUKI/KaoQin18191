@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from './../user';
 import { LeaveInfo } from '../leaveinfo';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-showuser',
@@ -24,9 +25,11 @@ export class ShowuserComponent implements OnInit {
   typeHighest = 1;
   punchInfo = new PunchInfo();
   punchCount = 0;
+  date = new Date();
+  dateShow = this.date.getFullYear() + '/' + this.date.getUTCMonth() + '/' + this.date.getDate();
 
 
-  constructor(private http: HttpClient, private dataIntService: DataIntService) {
+  constructor(private http: HttpClient, private dataIntService: DataIntService, private router: Router) {
     this.user = SavedUser.getUser();
    }
 
@@ -37,13 +40,13 @@ export class ShowuserComponent implements OnInit {
     await this.getUserinfo().then(data => {
       SavedUser.setUserInfo(data[0]);
     });
+    this.userInfo = SavedUser.getUserInfo();
     if (SavedUser.getUserInfo().type === '员工') {
       this.typeHigher = null;
       this.typeHighest = null;
     } else if (SavedUser.getUserInfo().type === '行政') {
       this.typeHighest = null;
     } else {
-
     }
   }
 
@@ -51,6 +54,7 @@ export class ShowuserComponent implements OnInit {
     this.http.get('http://112.74.164.166:3000/logout', {withCredentials: true}).subscribe(data => {
       if (JSON.parse(JSON.stringify(data)).code === '200') {
         alert('注销成功！');
+        this.router.navigateByUrl('/login');
       } else {
         alert('注销失败');
       }

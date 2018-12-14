@@ -7,9 +7,12 @@ table {
 .getdata-matcard {
   position: absolute;
   width: 30%;
-  height: 60%;
+  height: auto;
   left: 35%;
   top: 15%;
   visibility: inherit;
+}
+.example-full-width {
+  left: 10%;
 }
 

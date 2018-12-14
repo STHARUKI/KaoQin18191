@@ -3,7 +3,7 @@ export class UserInfo {
   name: string;
   sex: string;
   beginWork: Date;
-  restVacation: number;
+  restvacation: number;
   type: string;
   department: string;
 }
