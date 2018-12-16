@@ -6,14 +6,108 @@ Commit By 冯晴,2018/11/11
 | 组员姓名 | 学号         | 分工                         |
 | ---- | ---------- | -------------------------- |
 | 冯晴   | 3016218138 | PM，RD，DOC（软件设计说明书）         |
-| 何雨璇  | 3016218141 | RD，DOC（软件设计说明书）            |
-| 娄宇欣  | 3016218149 | RD，DOC（软件设计说明书）            |
+| 何雨璇  | 3016218141 | RD，DOC（软件需求规格说明书， 软件设计说明书） |
+| 娄宇欣  | 3016218149 | RD，DOC（软件需求规格说明书， 软件设计说明书） |
 | 张亚文  | 3016218161 | QA，DOC（软件需求规格说明书 ，软件测试说明书） |
 
 说明：
 
-- 前端angular, ui框架 angular material , npm init npm install ng serve --open  注意事项：由于服务器是联网，ip限制 4200 ，没有对页面做安卓端支持，建议在Chrme浏览器运行
-- 分工 文件 大致
+- ####分工 
+
+  ```
+  软件设计说明书：冯晴、娄宇欣、何雨璇
+
+  软件需求规格说明书：娄宇欣、何雨璇、张亚文
+
+  软件测试说明书：张亚文
+
+  表头：娄宇欣、冯晴
+
+  back-end:冯晴
+
+  front-end:
+
+  app.component.css 冯晴
+
+  app.component.html 冯晴
+
+  app.component.ts 冯晴
+
+  app.module.ts 冯晴
+
+  app-routing.modules.ts 冯晴
+
+  data-int.service.ts 娄宇欣
+
+  index.html 何雨璇
+
+  leaveinfo.ts 何雨璇
+
+  logion.guard.ts 何雨璇
+
+  outinfo.ts 冯晴
+
+  punchinfo.ts 冯晴
+
+  res.ts 冯晴
+
+  saveduser.ts 娄宇欣
+
+  user.ts 娄宇欣
+
+  userinfo.ts 娄宇欣
+
+  data 娄宇欣
+
+  getdata 冯晴
+
+  login 冯晴
+
+  showuser 何雨璇
+  ```
+
+- #### 前端
+
+- 使用的框架为angular, ui的框架为 angular material 
+
+  如果想要在自己的机器上运行，需进行
+
+  ```
+  >npm init
+  >npm install
+  >ng server--open
+  ```
+
+- 注意事项：
+
+    1）由于该项目是上传到阿里云服务器上的,所以需要联网访问后端api
+
+    2）根据自身的使用情况，需要酌情对back-end/APIServer/app.js文件中以下部分中的header设置进行调整
+
+
+  ```
+  app.all('*', function(req, res, next) {
+    var allowedOrigins = ['http://localhost:4200'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    return next();
+  });
+  ```
+
+    3）没有对页面做安卓端的支持
+
+    4）建议在 Chrome 浏览器运行
+
+- ####后端
+
+- 数据库是置于云服务器上的，若使用该系统则需要按照软件设计说明书中的数据库设计部分在本地使用MySQL数据库建立本地数据库
 
 
 - 后端代码使用nodejs+express框架搭建
