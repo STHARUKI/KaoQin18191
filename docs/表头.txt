@@ -23,20 +23,20 @@ restvacation int,
 type enum("员工","行政","部门","副总","总经理"),
 department enum("行政","人事","财务","开发","产品","测试","运营"),
 primary key(pid));
-
 create table punch_record(
 rid int primary key not null auto_increment,
 pid varchar(10) not null,
-begintime date,
-endtime date,
+begintime datetime,
+endtime datetime,
 foreign key(pid) references users(pid) on delete cascade)auto_increment=1001;
+
 
 create table leave_record(
 rid int primary key not null auto_increment,
 pid varchar(10) not null,
 begintime date,
 endtime date,
-type enum("事假","病假","年假","产假","婚假","丧假"),
+ltype enum("事假","病假","年假","产假","婚假","丧假"),
 reason varchar(100),
 status enum("批准","未批准","未审核","等待副总经理审核","等待总经理审核"),
 foreign key(pid) references users(pid) on delete cascade)auto_increment=1001;

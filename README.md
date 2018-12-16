@@ -12,6 +12,10 @@ Commit By 冯晴,2018/11/11
 
 说明：
 
+- 前端angular, ui框架 angular material , npm init npm install ng serve --open  注意事项：由于服务器是联网，ip限制 4200 ，没有对页面做安卓端支持，建议在Chrme浏览器运行
+- 分工 文件 大致
+
+
 - 后端代码使用nodejs+express框架搭建
 
 
