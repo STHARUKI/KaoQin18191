@@ -174,7 +174,7 @@
 <div [hidden]="isHiddenNewOutSelf">
       <mat-card class="getdata-matcard">
           <mat-card-header>
-              <mat-card-title>提交请假申请</mat-card-title>
+              <mat-card-title>提交外出申请</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <form >
@@ -227,7 +227,7 @@
                         <mat-form-field class="example-full-width" style="left: 10%" >
                             <input matInput placeholder="开始时间" [matDatepicker]="myDatepickerOutBeginChange" [(ngModel)]="begintime"  name="begintime" required>
                             <mat-datepicker-toggle [for]="myDatepickerOutBeginChange"></mat-datepicker-toggle>
-                            <mat-datepicker #myDatepickerOutBegin></mat-datepicker>
+                            <mat-datepicker #myDatepickerOutBeginChange></mat-datepicker>
                         </mat-form-field>
                     </td>
                   </tr>
@@ -236,7 +236,7 @@
                           <mat-form-field class="example-full-width" style="left: 10%">
                               <input matInput placeholder="结束时间" [matDatepicker]="myDatepickerOutEndChange" [(ngModel)]="endtime" name="endtime" required>
                               <mat-datepicker-toggle [for]="myDatepickerOutEndChange"></mat-datepicker-toggle>
-                              <mat-datepicker #myDatepickerOutEnd></mat-datepicker>
+                              <mat-datepicker #myDatepickerOutEndChange></mat-datepicker>
                           </mat-form-field>
                       </td>
                     </tr>
