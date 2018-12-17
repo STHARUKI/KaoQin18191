@@ -87,11 +87,8 @@ Commit By 冯晴,2018/11/11
 
   ```
   app.all('*', function(req, res, next) {
-    var allowedOrigins = ['http://localhost:4200'];
-    var origin = req.headers.origin;
-    if(allowedOrigins.indexOf(origin) > -1) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
+    res.header("Access-Control-Allow-Origin", 'http://112.74.164.166');
+  
     res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
